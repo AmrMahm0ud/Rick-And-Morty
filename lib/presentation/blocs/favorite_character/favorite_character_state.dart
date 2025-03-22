@@ -17,3 +17,6 @@ class UpdateFavoriteCharacterScreenState extends FavoriteCharacterState {
   UpdateFavoriteCharacterScreenState({required this.character});
 }
 
+class FavoriteCharacterShowSkeletonState extends FavoriteCharacterState {}
+
+class FavoriteCharacterHideSkeletonState extends FavoriteCharacterState {}

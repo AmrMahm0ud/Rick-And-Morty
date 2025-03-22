@@ -40,10 +40,12 @@ class FavoriteCharacterBloc
 
   Future<void> _onUnFavoriteCharacterEvent(UnFavoriteCharacterEvent event,
       Emitter<FavoriteCharacterState> emit) async {
+    emit(FavoriteCharacterShowSkeletonState());
     DataState dataState = await unFavoriteCharacterUseCase(event.characterId);
     if (dataState is DataSuccess) {
       characters.removeWhere((element) => element.id == event.characterId);
       emit(UpdateFavoriteCharacterScreenState(character: characters));
     }
+    emit(FavoriteCharacterHideSkeletonState());
   }
 }

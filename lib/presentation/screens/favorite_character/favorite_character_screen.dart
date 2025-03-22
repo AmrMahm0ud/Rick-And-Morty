@@ -5,6 +5,7 @@ import 'package:rick/core/base/widget/base_stateful_widget.dart';
 import 'package:rick/domain/entity/character/character.dart';
 import 'package:rick/presentation/blocs/favorite_character/favorite_character_bloc.dart';
 import 'package:rick/presentation/screens/character/widget/character_card_widget.dart';
+import 'package:rick/presentation/screens/character/widget/character_skeleton_effect_widget.dart';
 import 'package:rick/presentation/widgets/build_app_bar_widget.dart';
 import 'package:rick/presentation/widgets/custom_empty_list_widget.dart';
 
@@ -39,28 +40,33 @@ class _FavoriteCharacterScreenState extends BaseState<FavoriteCharacterScreen> {
           }
         },
         builder: (context, state) {
-          return characters.isEmpty
-              ? const CustomEmptyListWidget()
-              : ListView.builder(
-                  itemCount: characters.length,
-                  padding: const EdgeInsets.all(16),
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        Navigator.pushNamed(context, Routes.characterDetail,
-                            arguments: characters[index]);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CharacterCardWidget(
-                          character: characters[index],
-                          unFavorite: (id) {
-                            _unFavoriteCharacter(id);
-                          },
+          if (state is FavoriteCharacterShowSkeletonState ||
+              state is FavoriteCharacterInitial) {
+            return const CharacterSkeletonEffectWidget();
+          } else {
+            return characters.isEmpty
+                ? const CustomEmptyListWidget()
+                : ListView.builder(
+                    itemCount: characters.length,
+                    padding: const EdgeInsets.all(16),
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          Navigator.pushNamed(context, Routes.characterDetail,
+                              arguments: characters[index]);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: CharacterCardWidget(
+                            character: characters[index],
+                            unFavorite: (id) {
+                              _unFavoriteCharacter(id);
+                            },
+                          ),
                         ),
-                      ),
-                    );
-                  });
+                      );
+                    });
+          }
         },
       ),
     );

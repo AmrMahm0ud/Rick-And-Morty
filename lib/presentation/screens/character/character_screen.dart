@@ -13,6 +13,7 @@ import 'package:rick/presentation/screens/character/widget/character_bottom_shee
 import 'package:rick/presentation/screens/character/widget/character_card_widget.dart';
 import 'package:rick/presentation/screens/character/widget/character_skeleton_effect_widget.dart';
 import 'package:rick/presentation/widgets/build_app_bar_widget.dart';
+import 'package:rick/presentation/widgets/custom_empty_list_widget.dart';
 import 'package:rick/presentation/widgets/search_text_field_widget.dart';
 import 'package:collection/collection.dart';
 
@@ -71,64 +72,68 @@ class _CharacterScreenState extends BaseState<CharacterScreen> {
           }
         },
         builder: (context, state) {
-          return state is CharacterShowSkeletonState ||
-                  state is CharacterInitial
-              ? const CharacterSkeletonEffectWidget()
-              : Column(
-                  children: [
-                    Padding(
-                      padding:
-                          const EdgeInsets.only(left: 24, right: 24, top: 24),
-                      child: SearchTextFieldWidget(
-                        controller: _searchTextEditingController,
-                        labelText: "Search",
-                        iconPath: ImagePaths.search,
-                        onSubmitted: (value) {
-                          _reset();
-                          _getCharacter(
-                              name: value,
-                              species: selectedSpices?.value ?? "",
-                              status: selectedState?.value ?? "");
-                        },
-                        clearButtonAction: () {
-                          _reset();
-                          _searchTextEditingController.clear();
-                          _getCharacter(
-                              species: selectedSpices?.value ?? "",
-                              status: selectedState?.value ?? "",
-                              name: _searchTextEditingController.text);
-                        },
+          if (state is CharacterShowSkeletonState ||
+              state is CharacterInitial) {
+            return CharacterSkeletonEffectWidget();
+          } else {
+            return characters.isEmpty
+                ? const CustomEmptyListWidget()
+                : Column(
+                    children: [
+                      Padding(
+                        padding:
+                            const EdgeInsets.only(left: 24, right: 24, top: 24),
+                        child: SearchTextFieldWidget(
+                          controller: _searchTextEditingController,
+                          labelText: "Search",
+                          iconPath: ImagePaths.search,
+                          onSubmitted: (value) {
+                            _reset();
+                            _getCharacter(
+                                name: value,
+                                species: selectedSpices?.value ?? "",
+                                status: selectedState?.value ?? "");
+                          },
+                          clearButtonAction: () {
+                            _reset();
+                            _searchTextEditingController.clear();
+                            _getCharacter(
+                                species: selectedSpices?.value ?? "",
+                                status: selectedState?.value ?? "",
+                                name: _searchTextEditingController.text);
+                          },
+                        ),
                       ),
-                    ),
-                    Expanded(
-                      child: ListView.builder(
-                          itemCount: characters.length,
-                          controller: _scrollController,
-                          padding: const EdgeInsets.all(16),
-                          itemBuilder: (context, index) {
-                            return InkWell(
-                              onTap: () {
-                                Navigator.pushNamed(
-                                    context, Routes.characterDetail,
-                                    arguments: characters[index]);
-                              },
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: CharacterCardWidget(
-                                  character: characters[index],
-                                  favorite: (character) {
-                                    _favoriteCharacter(character);
-                                  },
-                                  unFavorite: (id) {
-                                    _unFavoriteCharacter(id);
-                                  },
+                      Expanded(
+                        child: ListView.builder(
+                            itemCount: characters.length,
+                            controller: _scrollController,
+                            padding: const EdgeInsets.all(16),
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                      context, Routes.characterDetail,
+                                      arguments: characters[index]);
+                                },
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CharacterCardWidget(
+                                    character: characters[index],
+                                    favorite: (character) {
+                                      _favoriteCharacter(character);
+                                    },
+                                    unFavorite: (id) {
+                                      _unFavoriteCharacter(id);
+                                    },
+                                  ),
                                 ),
-                              ),
-                            );
-                          }),
-                    ),
-                  ],
-                );
+                              );
+                            }),
+                      ),
+                    ],
+                  );
+          }
         },
       ),
     );
