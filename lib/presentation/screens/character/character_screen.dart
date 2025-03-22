@@ -73,8 +73,8 @@ class _CharacterScreenState extends BaseState<CharacterScreen> {
         },
         builder: (context, state) {
           if (state is CharacterShowSkeletonState ||
-              state is CharacterInitial) {
-            return CharacterSkeletonEffectWidget();
+              state is CharacterInitial || characters.isEmpty) {
+            return const CharacterSkeletonEffectWidget();
           } else {
             return characters.isEmpty
                 ? const CustomEmptyListWidget()
