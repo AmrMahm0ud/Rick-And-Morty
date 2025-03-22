@@ -46,7 +46,11 @@ class _CharacterBottomSheetFilterState
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text("Status"),
+              Text(
+                "Status",
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    color: ColorManager.black, fontWeight: FontWeight.w600),
+              ),
               const SizedBox(height: 16),
               SingleChildScrollView(
                 child: Row(
@@ -55,7 +59,13 @@ class _CharacterBottomSheetFilterState
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 4.0),
                             child: FilterChip(
-                              label: Text(e.value),
+                              label: Text(
+                                e.value,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelLarge
+                                    ?.copyWith(color: ColorManager.black),
+                              ),
                               selected: e.isSelected,
                               selectedColor: ColorManager.primary,
                               showCheckmark: false,
@@ -68,7 +78,11 @@ class _CharacterBottomSheetFilterState
                 ),
               ),
               const SizedBox(height: 16),
-              const Text("Species"),
+              Text(
+                "Species",
+                style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    color: ColorManager.black, fontWeight: FontWeight.w600),
+              ),
               const SizedBox(height: 16),
               SingleChildScrollView(
                 child: Row(
@@ -77,9 +91,15 @@ class _CharacterBottomSheetFilterState
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 4.0),
                             child: FilterChip(
-                              label: Text(e.value),
+                              label: Text(
+                                e.value,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .labelLarge
+                                    ?.copyWith(color: ColorManager.black),
+                              ),
                               selected: e.isSelected,
-                              selectedColor: ColorManager.primary,
+                              selectedColor: ColorManager.white,
                               showCheckmark: false,
                               onSelected: (value) {
                                 _selectSpecies(e);
