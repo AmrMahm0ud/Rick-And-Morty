@@ -3,6 +3,9 @@
 ## Overview
 This is a Flutter application based on the **Rick and Morty** universe, built using **Clean Architecture** principles. It utilizes **Flutter Bloc** for state management and **Hive** for local data storage.
 
+## Project Demo
+[![Watch the demo](https://drive.google.com/file/d/1uPYdM1HR3emqrXX-mxU5R6stirzXUDY5/view?usp=sharing)
+
 ## Features
 - Fetch and display character information from an API.
 - Filter and search characters.
