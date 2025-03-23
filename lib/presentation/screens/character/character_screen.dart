@@ -10,6 +10,7 @@ import 'package:rick/domain/entity/character/character.dart';
 import 'package:rick/domain/entity/character/character_filter/character_filter.dart';
 import 'package:rick/domain/entity/lookup.dart';
 import 'package:rick/presentation/blocs/character/character_bloc.dart';
+import 'package:rick/presentation/blocs/character_filter/character_filter_bloc.dart';
 import 'package:rick/presentation/screens/character/widget/character_bottom_sheet_filter_widget.dart';
 import 'package:rick/presentation/screens/character/widget/character_card_widget.dart';
 import 'package:rick/presentation/screens/character/widget/character_skeleton_effect_widget.dart';
@@ -27,6 +28,9 @@ class CharacterScreen extends BaseStatefulWidget {
 
 class _CharacterScreenState extends BaseState<CharacterScreen> {
   CharacterBloc get _bloc => BlocProvider.of<CharacterBloc>(context);
+
+  CharacterFilterBloc get _CharacterFilterBloc =>
+      BlocProvider.of<CharacterFilterBloc>(context);
   TextEditingController _searchTextEditingController = TextEditingController();
   final ScrollController _scrollController = ScrollController();
 
@@ -38,6 +42,8 @@ class _CharacterScreenState extends BaseState<CharacterScreen> {
   @override
   void initState() {
     _bloc.currentPage = 1;
+    _resetFilter();
+    _reset();
     _getCharacter();
     _scrollController.addListener(_onScroll);
     super.initState();
@@ -181,6 +187,13 @@ class _CharacterScreenState extends BaseState<CharacterScreen> {
 
   void _reset() {
     _bloc.add(CharacterResetEvent());
+  }
+
+  void _resetFilter() {
+    selectedSpices = null;
+    selectedState = null;
+    _CharacterFilterBloc.selectedSpecies = null;
+    _CharacterFilterBloc.selectedStatus = null;
   }
 
   void _onScroll() {
