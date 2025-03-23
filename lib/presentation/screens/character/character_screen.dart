@@ -4,7 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rick/config/routes/routes_manager.dart';
 import 'package:rick/core/base/widget/base_stateful_widget.dart';
 import 'package:rick/core/resources/image_paths.dart';
-import 'package:rick/core/utils/bottom_sheet.dart';
+import 'package:rick/core/utils/show_bottom_sheet.dart';
+import 'package:rick/core/utils/show_snack_bar.dart';
 import 'package:rick/domain/entity/character/character.dart';
 import 'package:rick/domain/entity/character/character_filter/character_filter.dart';
 import 'package:rick/domain/entity/lookup.dart';
@@ -69,6 +70,8 @@ class _CharacterScreenState extends BaseState<CharacterScreen> {
             hideLoading();
           } else if (state is CharacterResetState) {
             characters = [];
+          } else if (state is FailGetCharacterState) {
+            showCustomSnackBar(context, state.message);
           }
         },
         builder: (context, state) {
@@ -98,7 +101,8 @@ class _CharacterScreenState extends BaseState<CharacterScreen> {
                       _getCharacter(
                           species: selectedSpices?.value ?? "",
                           status: selectedState?.value ?? "",
-                          name: _searchTextEditingController.text);
+                          name: _searchTextEditingController.text,
+                          showLoading: true);
                     },
                   ),
                 ),

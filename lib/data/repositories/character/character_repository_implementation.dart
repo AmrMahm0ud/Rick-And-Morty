@@ -33,7 +33,7 @@ class CharacterRepositoryImplementation extends CharactersRepository {
     } on DioException catch (e) {
       return DataFailed(
         error: e,
-        message: "Something went wrong ${e.response?.data["error"]}",
+        message: "Something went wrong ${e.response}",
       );
     }
   }
