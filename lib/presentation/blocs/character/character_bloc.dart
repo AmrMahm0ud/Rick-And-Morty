@@ -49,7 +49,7 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
         page: currentPage,
         name: event.name,
         status: event.status,
-        spices: event.species);
+        species: event.species);
 
     if (characterResult is DataSuccess) {
       characters.addAll(characterResult.data?.characters ?? []);

@@ -8,8 +8,8 @@ class CallGetCharacterApiUseCase {
   CallGetCharacterApiUseCase(this._charactersRepository);
 
   Future<DataState<CharacterResult>> call(
-      {required int page, String? name, status, spices}) async {
+      {required int page, String? name, status, species}) async {
     return await _charactersRepository.getCharacters(
-        page: page, name: name, species: spices, status: status);
+        page: page, name: name, species: species, status: status);
   }
 }
