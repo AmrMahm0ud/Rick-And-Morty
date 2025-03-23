@@ -45,7 +45,7 @@ class _FavoriteCharacterScreenState extends BaseState<FavoriteCharacterScreen> {
             return const FavoriteCharacterSkeletonEffectWidget();
           } else {
             return characters.isEmpty
-                ? const CustomEmptyListWidget()
+                ? const Center(child: CustomEmptyListWidget())
                 : ListView.builder(
                     itemCount: characters.length,
                     padding: const EdgeInsets.all(16),

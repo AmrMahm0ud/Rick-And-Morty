@@ -40,7 +40,7 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
 
   Future<void> _onGetCharacterCallApiEvent(
       GetCharacterCallApiEvent event, Emitter<CharacterState> emit) async {
-    if (currentPage > 1) {
+    if (currentPage > 1 || event.showLoading) {
       emit(CharacterShowLoadingState());
     } else {
       emit(CharacterShowSkeletonState());
@@ -67,7 +67,7 @@ class CharacterBloc extends Bloc<CharacterEvent, CharacterState> {
           message: characterResult.message ?? "Something went wrong"));
     }
 
-    if (currentPage > 1) {
+    if (currentPage > 1 || event.showLoading) {
       emit(CharacterHideLoadingState());
     } else {
       emit(CharacterHideSkeletonState());

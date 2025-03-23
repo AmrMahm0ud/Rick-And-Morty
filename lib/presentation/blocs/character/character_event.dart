@@ -11,9 +11,13 @@ class GetCharacterCallApiEvent extends CharacterEvent {
   final String name;
   final String status;
   final String species;
+  final bool showLoading;
 
   GetCharacterCallApiEvent(
-      {this.name = "", this.species = "", this.status = ""});
+      {this.name = "",
+      this.species = "",
+      this.status = "",
+      this.showLoading = false});
 }
 
 class CharacterResetEvent extends CharacterEvent {}

@@ -73,38 +73,39 @@ class _CharacterScreenState extends BaseState<CharacterScreen> {
         },
         builder: (context, state) {
           if (state is CharacterShowSkeletonState ||
-              state is CharacterInitial || characters.isEmpty) {
+              state is CharacterInitial) {
             return const CharacterSkeletonEffectWidget();
           } else {
-            return characters.isEmpty
-                ? const CustomEmptyListWidget()
-                : Column(
-                    children: [
-                      Padding(
-                        padding:
-                            const EdgeInsets.only(left: 24, right: 24, top: 24),
-                        child: SearchTextFieldWidget(
-                          controller: _searchTextEditingController,
-                          labelText: "Search",
-                          iconPath: ImagePaths.search,
-                          onSubmitted: (value) {
-                            _reset();
-                            _getCharacter(
-                                name: value,
-                                species: selectedSpices?.value ?? "",
-                                status: selectedState?.value ?? "");
-                          },
-                          clearButtonAction: () {
-                            _reset();
-                            _searchTextEditingController.clear();
-                            _getCharacter(
-                                species: selectedSpices?.value ?? "",
-                                status: selectedState?.value ?? "",
-                                name: _searchTextEditingController.text);
-                          },
-                        ),
-                      ),
-                      Expanded(
+            return Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 24, right: 24, top: 24),
+                  child: SearchTextFieldWidget(
+                    controller: _searchTextEditingController,
+                    labelText: "Search",
+                    iconPath: ImagePaths.search,
+                    onSubmitted: (value) {
+                      _reset();
+                      _getCharacter(
+                          name: value,
+                          species: selectedSpices?.value ?? "",
+                          status: selectedState?.value ?? "",
+                          showLoading: true);
+                    },
+                    clearButtonAction: () {
+                      _reset();
+                      _searchTextEditingController.clear();
+                      _getCharacter(
+                          species: selectedSpices?.value ?? "",
+                          status: selectedState?.value ?? "",
+                          name: _searchTextEditingController.text);
+                    },
+                  ),
+                ),
+                characters.isEmpty
+                    ? const Expanded(
+                        child: Center(child: CustomEmptyListWidget()))
+                    : Expanded(
                         child: ListView.builder(
                             itemCount: characters.length,
                             controller: _scrollController,
@@ -131,8 +132,8 @@ class _CharacterScreenState extends BaseState<CharacterScreen> {
                               );
                             }),
                       ),
-                    ],
-                  );
+              ],
+            );
           }
         },
       ),
@@ -165,9 +166,13 @@ class _CharacterScreenState extends BaseState<CharacterScreen> {
     String name = "",
     String status = "",
     String species = "",
+    bool showLoading = false,
   }) {
-    _bloc.add(
-        GetCharacterCallApiEvent(name: name, status: status, species: species));
+    _bloc.add(GetCharacterCallApiEvent(
+        name: name,
+        status: status,
+        species: species,
+        showLoading: showLoading));
   }
 
   void _reset() {

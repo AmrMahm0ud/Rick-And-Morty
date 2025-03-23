@@ -99,7 +99,7 @@ class _CharacterBottomSheetFilterState
                                     ?.copyWith(color: ColorManager.black),
                               ),
                               selected: e.isSelected,
-                              selectedColor: ColorManager.white,
+                              selectedColor: ColorManager.primary,
                               showCheckmark: false,
                               onSelected: (value) {
                                 _selectSpecies(e);
